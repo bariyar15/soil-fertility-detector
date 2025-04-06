@@ -64,10 +64,11 @@ if submitted:
         N, P, K, pH, EC, OC, S, Zn, Fe, Cu, Mn, Bo = converted
 
         # Prepare DataFrame
-        input_df = pd.DataFrame([{
-            'N': N, 'P': P, 'K': K, 'pH': pH, 'EC': EC, 'OC': OC,
-            'S': S, 'zn': Zn, 'fe': Fe, 'cu': Cu, 'Mn': Mn, 'B': Bo
-        }])
+       input_df = pd.DataFrame([{
+    'N': N, 'P': P, 'K': K, 'pH': pH, 'EC': EC, 'OC': OC,
+    'S': S, 'zn': Zn, 'fe': Fe, 'cu': Cu, 'Mn': Mn, 'B': Bo
+}])
+
 
         # Apply log transform
         input_transformed = input_df.apply(lambda x: np.log10(x + 1e-5))
