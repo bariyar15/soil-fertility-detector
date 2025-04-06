@@ -4,7 +4,7 @@ import numpy as np
 import pickle
 
 # Load the trained model
-with open('/mnt/c/Users/91911/OneDrive/Desktop/soil-detector-ui/AgriSoilDetector.pkl', 'rb') as file:
+with open('AgriSoilDetector.pkl', 'rb') as file:
     model = pickle.load(file)
 
 st.set_page_config(page_title="Soil Fertility Predictor", layout="centered")
