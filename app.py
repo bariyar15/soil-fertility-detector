@@ -21,6 +21,7 @@ with st.form("fertility_form"):
         K = st.number_input('Potassium (K)', min_value=0.0)
         pH = st.number_input('pH Level', min_value=0.0)
         EC = st.number_input('Electrical Conductivity (EC)', min_value=0.0)
+        Bo = st.number_input('Boron (B)', min_value=0.0)
     with col2:
         OC = st.number_input('Organic Carbon (OC)', min_value=0.0)
         S = st.number_input('Sulfur (S)', min_value=0.0)
@@ -28,7 +29,7 @@ with st.form("fertility_form"):
         Fe = st.number_input('Iron (Fe)', min_value=0.0)
         Cu = st.number_input('Copper (Cu)', min_value=0.0)
         Mn = st.number_input('Manganese (Mn)', min_value=0.0)
-        Bo = st.number_input('Boron (B)', min_value=0.0)
+        
 
     submitted = st.form_submit_button("Predict Fertility")
 
