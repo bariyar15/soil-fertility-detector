@@ -3,8 +3,12 @@ import pandas as pd
 import numpy as np
 import pickle
 
+# Load model
 with open('AgriSoilDetector.pkl', 'rb') as file:
     model = pickle.load(file)
+
+# Debug: Show what the model expects
+EXPECTED_FEATURES = list(model.feature_names_in_)
 
 st.set_page_config(page_title="Soil Fertility Predictor", layout="centered")
 st.title("🌱 Soil Fertility Predictor")
@@ -25,6 +29,10 @@ def interpret_fertility(level):
         return "🟢 **Highly Fertile**", "Great! Keep monitoring and avoid over-fertilizing."
     else:
         return "Unknown", "No recommendation available."
+
+# Show expected feature names
+with st.expander("🔍 See expected feature names by the model"):
+    st.write(EXPECTED_FEATURES)
 
 # Input form
 with st.form("fertility_form"):
@@ -48,6 +56,7 @@ with st.form("fertility_form"):
 
     submitted = st.form_submit_button("Predict Fertility")
 
+# On form submit
 if submitted:
     inputs = [N, P, K, ph, ec, oc, S, zn, fe, cu, Mn, B]
     converted = list(map(float_or_none, inputs))
@@ -55,13 +64,13 @@ if submitted:
     if None in converted:
         st.error("❗ Please fill in all fields with valid numeric values.")
     else:
-        N, P, K, ph, ec, oc, S, zn, fe, cu, Mn, B = converted
+        # Build dictionary from expected features
+        input_data = dict(zip(
+            EXPECTED_FEATURES,
+            converted
+        ))
 
-        input_df = pd.DataFrame([{
-            'N': N, 'P': P, 'K': K, 'ph': ph, 'ec': ec, 'oc': oc,
-            'S': S, 'zn': zn, 'fe': fe, 'cu': cu, 'Mn': Mn, 'B': B
-        }])
-
+        input_df = pd.DataFrame([input_data])
         input_transformed = input_df.apply(lambda x: np.log10(x + 1e-5))
 
         result = model.predict(input_transformed)
